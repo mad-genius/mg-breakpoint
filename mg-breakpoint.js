@@ -80,17 +80,17 @@ MGBreakpoint.prototype.off = function(breakpoint, callback) {
 MGBreakpoint.prototype.min = function(breakpoint, callback) {
 	var result = window.matchMedia('(min-width: ' + this.get(breakpoint).value + 'px)').matches;
 
-	if(callback) {
+	if(callback && result) {
 		callback();
 	}
 
 	return result;
 };
 
-MGBreakpoint.prototype.max = function(breakpoint, callback) {
-	var result = window.matchMedia('(max-width: ' + this.get(breakpoint).value - 1 + 'px)').matches;
+MGBreakpoint.prototype.max = function(breakpoint, callback) {	
+	var result = window.matchMedia('(max-width: ' + (this.get(breakpoint).value - 1) + 'px)').matches;
 
-	if(callback) {
+	if(callback && result) {
 		callback();
 	}
 	
@@ -98,9 +98,9 @@ MGBreakpoint.prototype.max = function(breakpoint, callback) {
 };
 
 MGBreakpoint.prototype.minmax = function(min, max, callback) {
-	var result = window.matchMedia('(min-width: ' + this.get(min).value + 'px) and (max-width: ' + this.get(max).value - 1 + 'px)').matches;
+	var result = window.matchMedia('(min-width: ' + this.get(min).value + 'px) and (max-width: ' + (this.get(max).value - 1) + 'px)').matches;
 
-	if(callback) {
+	if(callback && result) {
 		callback();
 	}
 	
