@@ -101,6 +101,7 @@ If the window was currently 1400px wide, then this would result in the following
 `MGBreakpoint` accepts two optional arguments in its constructor:
 
 **points**: an object representing breakpoints in terms of `min-width`
+
 **clean**: a boolean to denote whether you want to clear out the default sizes
 
 Let's say you like the defaults but you just need to add one more specific size, you can do:
