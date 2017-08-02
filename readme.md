@@ -24,13 +24,13 @@ You can use _these_ breakpoints or your own—more on that later. Now you can ru
 
 ```js
 breakpoints.on('phone', function() {
-	// This code will run as soon as the window goes
-	// from 600px to 599px.
+    // This code will run as soon as the window goes
+    // from 600px to 599px.
 });
 
 breakpoints.off('desktop', function() {
-	// This code will run as soon as the window goes
-	// up to 1800px or down to 1199px.
+    // This code will run as soon as the window goes
+    // up to 1800px or down to 1199px.
 });
 ```
 
@@ -46,7 +46,7 @@ breakpoints.min('tabletPortrait');
 
 // You can go ahead and run a function on true if you want
 breakpoints.min('tabletPortrait', function() {
-	// This code runs if (min-width: 600px)
+    // This code runs if (min-width: 600px)
 });
 ```
 
@@ -58,7 +58,7 @@ breakpoints.max('tabletPortrait');
 
 // You can go ahead and run a function on true if you want
 breakpoints.max('tabletPortrait', function() {
-	// This code runs if (max-width: 599px)
+    // This code runs if (max-width: 599px)
 });
 ```
 
@@ -73,7 +73,7 @@ breakpoints.minmax('tabletPortrait', 'desktop');
 
 // You can go ahead and run a function on true if you want
 breakpoints.minmax('tabletPortrait', 'desktop', function() {
-	// This code runs if (min-width: 600px) and (max-width: 1199px)
+    // This code runs if (min-width: 600px) and (max-width: 1199px)
 });
 ```
 
@@ -91,8 +91,8 @@ If the window was currently 1400px wide, then this would result in the following
 
 ```js
 {
-	name: 'desktop',
-	value: 1200
+    name: 'desktop',
+    value: 1200
 }
 ```
 
@@ -108,7 +108,7 @@ Let's say you like the defaults but you just need to add one more specific size,
 
 ```js
 var breakpoints = new MGBreakpoint({
-	yuge: 2400
+    yuge: 2400
 });
 ```
 
@@ -118,8 +118,8 @@ You can also modify any of the default sizes. So you could do:
 
 ```js
 var breakpoints = new MGBreakpoint({
-	bigDesktop: 1500,
-	yuge: 2400
+    bigDesktop: 1500,
+    yuge: 2400
 });
 ```
 
@@ -129,10 +129,10 @@ But maybe you have your own breakpoints and you want to scrap the defaults. In t
 
 ```js
 var breakpoints = new MGBreakpoint({
-	hobbit: 400,
-	dwarf: 700,
-	human: 960,
-	troll: 2200
+    hobbit: 400,
+    dwarf: 700,
+    human: 960,
+    troll: 2200
 }, true); // passing true as second argument
 ```
 
