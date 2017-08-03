@@ -1,3 +1,25 @@
+/*
+  __  __  _____ ____                 _                _       _     _     
+ |  \/  |/ ____|  _ \               | |              (_)     | |   (_)    
+ | \  / | |  __| |_) |_ __ ___  __ _| | ___ __   ___  _ _ __ | |_   _ ___ 
+ | |\/| | | |_ |  _ <| '__/ _ \/ _` | |/ / '_ \ / _ \| | '_ \| __| | / __|
+ | |  | | |__| | |_) | | |  __/ (_| |   <| |_) | (_) | | | | | |_ _| \__ \
+ |_|  |_|\_____|____/|_|  \___|\__,_|_|\_\ .__/ \___/|_|_| |_|\__(_) |___/
+                                         | |                      _/ |    
+                                         |_|                     |__/
+
+* MG Breakpoint
+*
+* Copyright (c) 2017 Mad Genius Inc (https://madg.com)
+*
+* By Blake Watson (@blakewatson)
+* Licensed under the MIT license.
+*
+* @link https://github.com/Mad-Genius/mg-breakpoint
+* @author Blake Watson
+* @version 1.0.0
+*/
+
 function MGBreakpoint(points, clean) {
 	this.points = this.mergePoints(points, clean);
 	this.lastBreakpoint = this.getCurrentBreakpoint();
