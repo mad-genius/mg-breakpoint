@@ -22,17 +22,39 @@ bigDesktop: 1800
 
 You can use _these_ breakpoints or your own—more on that later. Now you can run a function when you enter (or leave) one of these breakpoints.
 
+The `enter` and `leave` functions accept a breakpoint name and a callback function. When the window width enters (or leaves) the given breakpoint, the callback function will fire.
+
 ```js
-breakpoints.on('phone', function() {
-    // This code will run as soon as the window goes
+breakpoints.enter('phone', function() {
+    // This code will run every time the window goes
     // from 600px to 599px.
 });
 
-breakpoints.off('desktop', function() {
-    // This code will run as soon as the window goes
+breakpoints.leave('desktop', function() {
+    // This code will run every time the window goes
     // up to 1800px or down to 1199px.
 });
 ```
+
+The callbacks only fire when the current breakpoint changes—not on every resize event. MG Breakpoint keeps up with the changes for you and lets you run code once a specified change happens.
+
+### Native events
+
+Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above functions with jQuery like this:
+
+```js
+$(window).on('phoneenter', function() {
+    // This code will run every time the window goes
+    // from 600px to 599px.
+});
+
+$(window).on('desktopleave', function() {
+    // This code will run every time the window goes
+    // up to 1800px or down to 1199px.
+});
+```
+
+Note that the custom events are all lowercase.
 
 ## Helpers
 

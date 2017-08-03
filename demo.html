@@ -29,23 +29,23 @@
 
 			var breakpoints = new MGBreakpoint();
 
-			breakpoints.on('phone', function() {
+			breakpoints.enter('phone', function() {
 				updateText('caption', 'Entered phone breakpoint.');
 			});
 
-			breakpoints.on('tabletPortrait', function() {
+			breakpoints.enter('tabletPortrait', function() {
 				updateText('caption', 'Entered tabletPortrait breakpoint.');
 			});
 
-			breakpoints.on('tabletLandscape', function() {
+			breakpoints.enter('tabletLandscape', function() {
 				updateText('caption', 'Entered tabletLandscape breakpoint.');
 			});
 
-			breakpoints.on('desktop', function() {
+			breakpoints.enter('desktop', function() {
 				updateText('caption', 'Entered desktop breakpoint.');
 			});
 
-			breakpoints.on('bigDesktop', function() {
+			breakpoints.enter('bigDesktop', function() {
 				updateText('caption', 'Entered bigDesktop breakpoint.');
 			});
 

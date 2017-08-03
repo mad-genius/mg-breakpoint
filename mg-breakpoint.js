@@ -13,10 +13,10 @@ MGBreakpoint.prototype.init = function() {
 
 		// if breakpoint has changed
 		if(current.name !== self.lastBreakpoint.name) {
-			// dispatch on for current
-			window.dispatchEvent(self.events[current.name]['on']);
-			// dispatch off for last breakpoint
-			window.dispatchEvent(self.events[self.lastBreakpoint.name]['off']);
+			// dispatch enter event for current breakpoint
+			window.dispatchEvent(self.events[current.name]['enter']);
+			// dispatch leave event for last breakpoint
+			window.dispatchEvent(self.events[self.lastBreakpoint.name]['leave']);
 			// update last breakpoint
 			self.lastBreakpoint = current;
 		}
@@ -69,12 +69,12 @@ MGBreakpoint.prototype.mergePoints = function(points, clean) {
 	return pointsArray;
 };
 
-MGBreakpoint.prototype.on = function(breakpoint, callback) {
-	window.addEventListener(breakpoint.toLowerCase() + 'on', callback);
+MGBreakpoint.prototype.enter = function(breakpoint, callback) {
+	window.addEventListener(breakpoint.toLowerCase() + 'enter', callback);
 };
 
-MGBreakpoint.prototype.off = function(breakpoint, callback) {
-	window.addEventListener(breakpoint.toLowerCase() + 'off', callback);
+MGBreakpoint.prototype.leave = function(breakpoint, callback) {
+	window.addEventListener(breakpoint.toLowerCase() + 'leave', callback);
 };
 
 MGBreakpoint.prototype.min = function(breakpoint, callback) {
@@ -142,11 +142,11 @@ MGBreakpoint.prototype.getCurrentBreakpoint = function() {
 MGBreakpoint.prototype.buildEvents = function() {
 	var events = {};
 	this.points.forEach(function(point) {
-		var eventOn = new Event(point.name.toLowerCase() + 'on');
-		var eventOff = new Event(point.name.toLowerCase() + 'off');
+		var eventOn = new Event(point.name.toLowerCase() + 'enter');
+		var eventOff = new Event(point.name.toLowerCase() + 'leave');
 		events[point.name] = {};
-		events[point.name]['on'] = eventOn;
-		events[point.name]['off'] = eventOff;
+		events[point.name]['enter'] = eventOn;
+		events[point.name]['leave'] = eventOff;
 	});
 	return events;
 };
