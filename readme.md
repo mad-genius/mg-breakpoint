@@ -40,7 +40,21 @@ The callbacks only fire when the current breakpoint changes—not on every resiz
 
 ### Native events
 
-Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above functions with jQuery like this:
+Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above functions like this:
+
+```js
+window.addEventListener('phoneenter', function() {
+    // This code will run every time the window goes
+    // from 600px to 599px.
+});
+
+window.addEventListener('desktopleave', function() {
+    // This code will run every time the window goes
+    // up to 1800px or down to 1199px.
+});
+```
+
+Or with jQuery:
 
 ```js
 $(window).on('phoneenter', function() {
@@ -54,7 +68,11 @@ $(window).on('desktopleave', function() {
 });
 ```
 
-Note that the custom events are all lowercase.
+Each breakpoint results in two custom events in the format `yourbreakpointenter` and `yourbreakpointleave`. Note that the custom events are all lowercase.
+
+### Body class
+
+MG Breakpoint will also apply a class to the `body`, representing the current breakpoint in terms of min-width, in the format of `mgb-yourbreakpoint`. It will automatically add and remove classes as you resize the window. Note that the breakpoint names are automatically converted to lowercase. If you don't want MG Breakpoint to apply a body class, you can specify that in the options. See "Configuration" below.
 
 ## Helpers
 
@@ -118,13 +136,15 @@ If the window was currently 1400px wide, then this would result in the following
 }
 ```
 
-## Custom breakpoints
+## Configuration
 
 `MGBreakpoint` accepts two optional arguments in its constructor:
 
 **points**: an object representing breakpoints in terms of `min-width`
 
-**clean**: a boolean to denote whether you want to clear out the default sizes
+**options**: an object representing configuration options
+
+### Custom breakpoints
 
 Let's say you like the defaults but you just need to add one more specific size, you can do:
 
@@ -147,7 +167,15 @@ var breakpoints = new MGBreakpoint({
 
 This would both modify `bigDesktop` and add `yuge`—and keep the other defaults intact.
 
-But maybe you have your own breakpoints and you want to scrap the defaults. In that case, pass true as the second argument:
+But maybe you have your own breakpoints and you want to scrap the defaults. In that case, you can override MG Breakpoint's options.
+
+### Options
+
+You can set two options:
+
+**removeDefaultBreakpoints**: determines whether to use only the breakpoints you specify, removing the default breakpoints. Defaults to `false`.
+
+**updateBodyClass**: determines whether to apply a class to the body representing the current breakpoint. Defaults to `true`.
 
 ```js
 var breakpoints = new MGBreakpoint({
@@ -155,7 +183,19 @@ var breakpoints = new MGBreakpoint({
     dwarf: 700,
     human: 960,
     troll: 2200
-}, true); // passing true as second argument
+}, {
+    removeDefaultBreakpoints: true
+});
 ```
 
 This will throw out the defaults and only use the breakpoints you pass in.
+
+### Disabling body class updates
+
+If you don't want MG Breakpoint to apply a body class representing the current breakpoint, do:
+
+```js
+var breakpoints = new MGBreakpoint(null, {
+    updateBodyClass: false
+});
+```

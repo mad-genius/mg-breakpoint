@@ -20,8 +20,9 @@
 * @version 1.0.0
 */
 
-function MGBreakpoint(points, clean) {
-	this.points = this.mergePoints(points, clean);
+function MGBreakpoint(points, options) {
+	this.options = this.mergeOptions(options);
+	this.points = this.mergePoints(points, this.options.removeDefaultBreakpoints);
 	this.lastBreakpoint = this.getCurrentBreakpoint();
 	this.events = this.buildEvents();
 	this.init();
@@ -29,6 +30,9 @@ function MGBreakpoint(points, clean) {
 
 MGBreakpoint.prototype.init = function() {
 	var self = this;
+	var current = self.getCurrentBreakpoint();
+
+	self.updateBodyClass(current.name);
 
 	window.addEventListener('resize', function() {
 		var current = self.getCurrentBreakpoint();
@@ -39,13 +43,32 @@ MGBreakpoint.prototype.init = function() {
 			window.dispatchEvent(self.events[current.name]['enter']);
 			// dispatch leave event for last breakpoint
 			window.dispatchEvent(self.events[self.lastBreakpoint.name]['leave']);
+			// update the body class
+			self.updateBodyClass(current.name, self.lastBreakpoint.name);
 			// update last breakpoint
 			self.lastBreakpoint = current;
 		}
 	});
 };
 
-MGBreakpoint.prototype.mergePoints = function(points, clean) {
+MGBreakpoint.prototype.mergeOptions = function(options) {
+	var defaults = {
+		removeDefaultBreakpoints: false,
+		updateBodyClass: true
+	};
+
+	if(typeof options === 'object') {
+		for(var option in defaults) {
+			if(options.hasOwnProperty(option)) {
+				defaults[option] = options[option];
+			}
+		}
+	}
+
+	return defaults;
+}
+
+MGBreakpoint.prototype.mergePoints = function(points, removeDefaultBreakpoints) {
 	var defaults = {
 		phone: 0,
 		tabletPortrait: 600,
@@ -56,7 +79,7 @@ MGBreakpoint.prototype.mergePoints = function(points, clean) {
 	var pointsArray = [];
 
 	// if clean is true, clear out the defaults
-	if(clean) {
+	if(removeDefaultBreakpoints) {
 		defaults = {};
 	}
 
@@ -89,6 +112,19 @@ MGBreakpoint.prototype.mergePoints = function(points, clean) {
 	});
 
 	return pointsArray;
+};
+
+MGBreakpoint.prototype.updateBodyClass = function(newName, oldName) {
+	if(!this.options.updateBodyClass) return;
+
+	var body = document.querySelector('body');
+	
+	if(oldName) {
+		body.classList.remove('mgb-' + oldName.toLowerCase());
+	}
+	if(newName) {
+		body.classList.add('mgb-' + newName.toLowerCase());
+	}
 };
 
 MGBreakpoint.prototype.enter = function(breakpoint, callback) {
