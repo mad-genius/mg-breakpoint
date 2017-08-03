@@ -7,17 +7,22 @@
 	    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
 		<title>MG Breakpoint</title>
 		<style>
+			body {
+				text-align: center;
+			}
+
 			#caption {
 				margin-top: 100px;
 				font-family: Georgia;
 				font-size: 22px;
-				text-align: center;
 			}
 		</style>
 	</head>
 	
 	<body>
 		<p id="caption">Resize this window.</p>
+		<p id="minmax"></p>
+		<p><button id="currentBreakpoint">Show current breakpoint</button></p>
 	
 		<script src="mg-breakpoint.js"></script>
 		<script>
@@ -25,27 +30,47 @@
 			var breakpoints = new MGBreakpoint();
 
 			breakpoints.on('phone', function() {
-				updateCaption('Entered phone breakpoint.');
+				updateText('caption', 'Entered phone breakpoint.');
 			});
 
 			breakpoints.on('tabletPortrait', function() {
-				updateCaption('Entered tabletPortrait breakpoint.');
+				updateText('caption', 'Entered tabletPortrait breakpoint.');
 			});
 
 			breakpoints.on('tabletLandscape', function() {
-				updateCaption('Entered tabletLandscape breakpoint.');
+				updateText('caption', 'Entered tabletLandscape breakpoint.');
 			});
 
 			breakpoints.on('desktop', function() {
-				updateCaption('Entered desktop breakpoint.');
+				updateText('caption', 'Entered desktop breakpoint.');
 			});
 
 			breakpoints.on('bigDesktop', function() {
-				updateCaption('Entered bigDesktop breakpoint.');
+				updateText('caption', 'Entered bigDesktop breakpoint.');
 			});
 
-			function updateCaption(text) {
-				var el = document.getElementById('caption');
+			var currentButton = document.getElementById('currentBreakpoint');
+			currentButton.addEventListener('click', function() {
+				var current = breakpoints.getCurrentBreakpoint();
+				updateText('caption', 'The current breakpoint is “' + current.name + '”, based on a min-width of ' + current.value + 'px.');
+			});
+
+			window.addEventListener('resize', function() {
+				breakpoints.minmax('tabletPortrait', 'tabletLandscape', function() {
+					updateText('minmax', 'This size is good for tablets.');
+				});
+
+				breakpoints.min('desktop', function() {
+					updateText('minmax', 'This size is good for desktops.');
+				});
+
+				breakpoints.max('tabletPortrait', function() {
+					updateText('minmax', 'This size is good for phones.');
+				});
+			});
+
+			function updateText(id, text) {
+				var el = document.getElementById(id);
 				el.textContent = text;
 			}
 
