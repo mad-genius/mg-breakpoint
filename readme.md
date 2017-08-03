@@ -58,7 +58,7 @@ Note that the custom events are all lowercase.
 
 ## Helpers
 
- In addition to the on/off events system, you have access to some helper functions.
+ In addition to the events system, you have access to some helper functions.
 
 ### min
 
