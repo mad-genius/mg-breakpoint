@@ -41,10 +41,21 @@ MGBreakpoint.prototype.init = function() {
 		if(current.name !== self.lastBreakpoint.name) {
 			// dispatch enter event for current breakpoint
 			window.dispatchEvent(self.events[current.name]['enter']);
+
 			// dispatch leave event for last breakpoint
 			window.dispatchEvent(self.events[self.lastBreakpoint.name]['leave']);
+
+			// dispatch min event if getting wider
+			// else dispatch max event if getting narrower
+			if(current.value > self.lastBreakpoint.value) {
+				window.dispatchEvent(self.events[current.name]['min']);
+			} else if(current.value < self.lastBreakpoint.value) {
+				window.dispatchEvent(self.events[self.lastBreakpoint.name]['max']);
+			}
+
 			// update the body class
 			self.updateBodyClass(current.name, self.lastBreakpoint.name);
+
 			// update last breakpoint
 			self.lastBreakpoint = current;
 		}
@@ -136,6 +147,14 @@ MGBreakpoint.prototype.leave = function(breakpoint, callback) {
 };
 
 MGBreakpoint.prototype.min = function(breakpoint, callback) {
+	window.addEventListener(breakpoint.toLowerCase() + 'min', callback);
+};
+
+MGBreakpoint.prototype.max = function(breakpoint, callback) {
+	window.addEventListener(breakpoint.toLowerCase() + 'max', callback);
+};
+
+MGBreakpoint.prototype.isMin = function(breakpoint, callback) {
 	var result = window.matchMedia('(min-width: ' + this.get(breakpoint).value + 'px)').matches;
 
 	if(callback && result) {
@@ -145,7 +164,7 @@ MGBreakpoint.prototype.min = function(breakpoint, callback) {
 	return result;
 };
 
-MGBreakpoint.prototype.max = function(breakpoint, callback) {	
+MGBreakpoint.prototype.isMax = function(breakpoint, callback) {	
 	var result = window.matchMedia('(max-width: ' + (this.get(breakpoint).value - 1) + 'px)').matches;
 
 	if(callback && result) {
@@ -155,7 +174,7 @@ MGBreakpoint.prototype.max = function(breakpoint, callback) {
 	return result;
 };
 
-MGBreakpoint.prototype.minmax = function(min, max, callback) {
+MGBreakpoint.prototype.isMinMax = function(min, max, callback) {
 	var result = window.matchMedia('(min-width: ' + this.get(min).value + 'px) and (max-width: ' + (this.get(max).value - 1) + 'px)').matches;
 
 	if(callback && result) {
@@ -200,11 +219,15 @@ MGBreakpoint.prototype.getCurrentBreakpoint = function() {
 MGBreakpoint.prototype.buildEvents = function() {
 	var events = {};
 	this.points.forEach(function(point) {
-		var eventOn = new Event(point.name.toLowerCase() + 'enter');
-		var eventOff = new Event(point.name.toLowerCase() + 'leave');
+		var eventEnter = new Event(point.name.toLowerCase() + 'enter');
+		var eventLeave = new Event(point.name.toLowerCase() + 'leave');
+		var eventMin = new Event(point.name.toLowerCase() + 'min');
+		var eventMax = new Event(point.name.toLowerCase() + 'max');
 		events[point.name] = {};
-		events[point.name]['enter'] = eventOn;
-		events[point.name]['leave'] = eventOff;
+		events[point.name]['enter'] = eventEnter;
+		events[point.name]['leave'] = eventLeave;
+		events[point.name]['min'] = eventMin;
+		events[point.name]['max'] = eventMax;
 	});
 	return events;
 };

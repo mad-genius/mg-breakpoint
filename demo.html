@@ -56,15 +56,15 @@
 			});
 
 			window.addEventListener('resize', function() {
-				breakpoints.minmax('tabletPortrait', 'desktop', function() {
+				breakpoints.isMinMax('tabletPortrait', 'desktop', function() {
 					updateText('minmax', 'This size is good for tablets.');
 				});
 
-				breakpoints.min('desktop', function() {
+				breakpoints.isMin('desktop', function() {
 					updateText('minmax', 'This size is good for desktops.');
 				});
 
-				breakpoints.max('tabletPortrait', function() {
+				breakpoints.isMax('tabletPortrait', function() {
 					updateText('minmax', 'This size is good for phones.');
 				});
 			});

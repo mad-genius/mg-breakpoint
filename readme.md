@@ -22,14 +22,38 @@ bigDesktop: 1800
 
 You can use _these_ breakpoints or your own—more on that later. Now you can run a function when you enter (or leave) one of these breakpoints.
 
-The `enter` and `leave` functions accept a breakpoint name and a callback function. When the window width enters (or leaves) the given breakpoint, the callback function will fire.
+### Responding to breakpoints
+
+The following functions accept a breakpoint name and a callback function. When the window width enters (or leaves) the given breakpoint, the callback function will fire.
+
+#### `min` and `max`
+
+Use `min` to fire a function once _on the way up_ and use `max` to fire a function once _on the way down_.
 
 ```js
-breakpoints.enter('phone', function() {
+breakpoints.min('tabletPortrait', function() {
+    // This code will run every time the window goes
+    // from 599px to 600px.
+});
+
+breakpoints.max('tabletPortrait', function() {
     // This code will run every time the window goes
     // from 600px to 599px.
 });
+```
 
+Use `enter` to fire a function once when entering a particular breakpoint range, regardless of the direction you are entering from.
+
+```js
+breakpoints.enter('tabletPortrait', function() {
+    // This code will run every time the window goes
+    // up to 600px or down to 899px.
+});
+```
+
+Use `leave` to fire a function once when leaving a particular breakpoint range, regardless of the direction you are leaving from.
+
+```js
 breakpoints.leave('desktop', function() {
     // This code will run every time the window goes
     // up to 1800px or down to 1199px.
@@ -78,7 +102,7 @@ MG Breakpoint will also apply a class to the `body`, representing the current br
 
  In addition to the events system, you have access to some helper functions.
 
-### min
+### isMin
 
 ```js
 // returns true if (min-width: 600px), otherwise returns false.
@@ -90,7 +114,7 @@ breakpoints.min('tabletPortrait', function() {
 });
 ```
 
-### max
+### isMax
 
 ```js
 // returns true if (max-width: 599px), otherwise returns false.
@@ -102,7 +126,7 @@ breakpoints.max('tabletPortrait', function() {
 });
 ```
 
-### minmax
+### isMinMax
 
 This helper lets you test for a specific breakpoint range.
 
