@@ -64,35 +64,42 @@ The callbacks only fire when the current breakpoint changes—not on every resiz
 
 ### Native events
 
-Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above functions like this:
+Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above `min` and `max` functions like this:
 
 ```js
-window.addEventListener('phoneenter', function() {
+window.addEventListener('tabletportraitmin', function() {
     // This code will run every time the window goes
-    // from 600px to 599px.
+    // from 599px to 600px.
 });
 
-window.addEventListener('desktopleave', function() {
+window.addEventListener('tabletportraitmax', function() {
     // This code will run every time the window goes
-    // up to 1800px or down to 1199px.
+    // from 600px to 599px.
 });
 ```
 
 Or with jQuery:
 
 ```js
-$(window).on('phoneenter', function() {
+$(window).on('tabletportraitmin', function() {
+    // This code will run every time the window goes
+    // from 599px to 600px.
+});
+
+$(window).on('tabletportraitmax', function() {
     // This code will run every time the window goes
     // from 600px to 599px.
 });
-
-$(window).on('desktopleave', function() {
-    // This code will run every time the window goes
-    // up to 1800px or down to 1199px.
-});
 ```
 
-Each breakpoint results in two custom events in the format `yourbreakpointenter` and `yourbreakpointleave`. Note that the custom events are all lowercase.
+Each breakpoint results in four custom events:
+
+- `yourbreakpointmin`
+- `yourbreakpointmax`
+- `yourbreakpointenter`
+- `yourbreakpointleave`
+
+Note that the custom events are all lowercase.
 
 ### Body class
 
