@@ -106,10 +106,10 @@ MG Breakpoint will also apply a class to the `body`, representing the current br
 
 ```js
 // returns true if (min-width: 600px), otherwise returns false.
-breakpoints.min('tabletPortrait');
+breakpoints.isMin('tabletPortrait');
 
 // You can go ahead and run a function on true if you want
-breakpoints.min('tabletPortrait', function() {
+breakpoints.isMin('tabletPortrait', function() {
     // This code runs if (min-width: 600px)
 });
 ```
@@ -118,10 +118,10 @@ breakpoints.min('tabletPortrait', function() {
 
 ```js
 // returns true if (max-width: 599px), otherwise returns false.
-breakpoints.max('tabletPortrait');
+breakpoints.isMax('tabletPortrait');
 
 // You can go ahead and run a function on true if you want
-breakpoints.max('tabletPortrait', function() {
+breakpoints.isMax('tabletPortrait', function() {
     // This code runs if (max-width: 599px)
 });
 ```
@@ -133,10 +133,10 @@ This helper lets you test for a specific breakpoint range.
 ```js
 // returns true if (min-width: 600px) and (max-width: 1199px),
 // otherwise returns false.
-breakpoints.minmax('tabletPortrait', 'desktop');
+breakpoints.isMinMax('tabletPortrait', 'desktop');
 
 // You can go ahead and run a function on true if you want
-breakpoints.minmax('tabletPortrait', 'desktop', function() {
+breakpoints.isMinMax('tabletPortrait', 'desktop', function() {
     // This code runs if (min-width: 600px) and (max-width: 1199px)
 });
 ```
