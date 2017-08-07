@@ -210,16 +210,17 @@ You can set two options:
 
 ```js
 var breakpoints = new MGBreakpoint({
-    hobbit: 400,
-    dwarf: 700,
-    human: 960,
+    hobbit: 0,
+    dwarf: 400,
+    human: 700,
+    orc: 960,
     troll: 2200
 }, {
     removeDefaultBreakpoints: true
 });
 ```
 
-This will throw out the defaults and only use the breakpoints you pass in.
+This will throw out the defaults and only use the breakpoints you pass in. Note that if you remove the defaults, you must provide a breakpoint with a `0` value.
 
 ### Disabling body class updates
 
