@@ -17,7 +17,7 @@
 *
 * @link https://github.com/Mad-Genius/mg-breakpoint
 * @author Blake Watson
-* @version 1.0.0
+* @version 1.0.1
 */
 
 function MGBreakpoint(points, options) {
@@ -219,10 +219,10 @@ MGBreakpoint.prototype.getCurrentBreakpoint = function() {
 MGBreakpoint.prototype.buildEvents = function() {
 	var events = {};
 	this.points.forEach(function(point) {
-		var eventEnter = new Event(point.name.toLowerCase() + 'enter');
-		var eventLeave = new Event(point.name.toLowerCase() + 'leave');
-		var eventMin = new Event(point.name.toLowerCase() + 'min');
-		var eventMax = new Event(point.name.toLowerCase() + 'max');
+		var eventEnter = new CustomEvent(point.name.toLowerCase() + 'enter');
+		var eventLeave = new CustomEvent(point.name.toLowerCase() + 'leave');
+		var eventMin = new CustomEvent(point.name.toLowerCase() + 'min');
+		var eventMax = new CustomEvent(point.name.toLowerCase() + 'max');
 		events[point.name] = {};
 		events[point.name]['enter'] = eventEnter;
 		events[point.name]['leave'] = eventLeave;
