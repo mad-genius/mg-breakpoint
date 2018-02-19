@@ -17,10 +17,11 @@
 *
 * @link https://github.com/Mad-Genius/mg-breakpoint
 * @author Blake Watson
-* @version 1.0.1
+* @version 1.0.2
 */
 
 function MGBreakpoint(points, options) {
+	this.polyfill(); // event support for IE
 	this.options = this.mergeOptions(options);
 	this.points = this.mergePoints(points, this.options.removeDefaultBreakpoints);
 	this.lastBreakpoint = this.getCurrentBreakpoint();
@@ -230,4 +231,19 @@ MGBreakpoint.prototype.buildEvents = function() {
 		events[point.name]['max'] = eventMax;
 	});
 	return events;
+};
+
+MGBreakpoint.prototype.polyfill = function() {
+    if ( typeof window.CustomEvent === "function" ) return false;
+
+    function CustomEvent ( event, params ) {
+      params = params || { bubbles: false, cancelable: false, detail: undefined };
+      var evt = document.createEvent( 'CustomEvent' );
+      evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+      return evt;
+     }
+
+    CustomEvent.prototype = window.Event.prototype;
+
+    window.CustomEvent = CustomEvent;
 };
