@@ -17,7 +17,7 @@
 *
 * @link https://github.com/Mad-Genius/mg-breakpoint
 * @author Blake Watson
-* @version 1.0.2
+* @version 1.0.3
 */
 
 function MGBreakpoint(points, options) {
@@ -139,20 +139,28 @@ MGBreakpoint.prototype.updateBodyClass = function(newName, oldName) {
 	}
 };
 
-MGBreakpoint.prototype.enter = function(breakpoint, callback) {
+MGBreakpoint.prototype.enter = function(breakpoint, callback, checkNow) {
+	checkNow = checkNow ? true : false;
 	window.addEventListener(breakpoint.toLowerCase() + 'enter', callback);
+	if(checkNow) this.isMinMax(breakpoint, callback);
 };
 
-MGBreakpoint.prototype.leave = function(breakpoint, callback) {
+MGBreakpoint.prototype.leave = function(breakpoint, callback, checkNow) {
+	checkNow = checkNow ? true : false;
 	window.addEventListener(breakpoint.toLowerCase() + 'leave', callback);
+	if(checkNow) this.isMinMax(breakpoint, callback);
 };
 
-MGBreakpoint.prototype.min = function(breakpoint, callback) {
+MGBreakpoint.prototype.min = function(breakpoint, callback, checkNow) {
+	checkNow = checkNow ? true : false;
 	window.addEventListener(breakpoint.toLowerCase() + 'min', callback);
+	if(checkNow) this.isMin(breakpoint, callback);
 };
 
-MGBreakpoint.prototype.max = function(breakpoint, callback) {
+MGBreakpoint.prototype.max = function(breakpoint, callback, checkNow) {
+	checkNow = checkNow ? true : false;
 	window.addEventListener(breakpoint.toLowerCase() + 'max', callback);
+	if(checkNow) this.isMax(breakpoint, callback);
 };
 
 MGBreakpoint.prototype.isMin = function(breakpoint, callback) {

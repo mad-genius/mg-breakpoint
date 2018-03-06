@@ -62,6 +62,16 @@ breakpoints.leave('desktop', function() {
 
 The callbacks only fire when the current breakpoint changes—not on every resize event. MG Breakpoint keeps up with the changes for you and lets you run code once a specified change happens.
 
+If you also want to fire the callbacks immediately (assuming the current breakpoint matches), you can pass `true` as a third paremeter:
+
+```js
+breakpoints.min('tabletPortrait', function() {
+    // This code will run every time the window goes
+    // from 599px to 600px. If currently in tabletPortrait
+    // or above, it will also run immediately
+}, true);
+```
+
 ### Native events
 
 Behind the scenes, MG Breakpoint dispatches custom events on the window. If you want, you can manually add listeners to these events. For example, you could rewrite the above `min` and `max` functions like this:
